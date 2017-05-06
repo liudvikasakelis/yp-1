@@ -5,9 +5,9 @@ import requests
 
 
 def scraper(url):
-    results = [None] * 12
-    results[0] = sys.argv[1]  # URL
-    page = requests.get(results[0])
+    results = [None] * 9
+    results[0] = url 
+    page = requests.get(url)
     tree = html.fromstring(page.content)
     
     try:
@@ -16,9 +16,42 @@ def scraper(url):
         results[1] = 'not found'
     
     try:
-        results[2] = tree.xpath('//p[@class="address"]/span/text()')[0:3] # address
+        results[2] = tree.xpath('//p[@class="phone"]/text()')[0]
     except IndexError:
-        results[1] = 'not found'
+        results[2] = 'not found'
         
+    try:
+        results[3] = ';'.join(tree.xpath('//dd[@class="categories"]/span/a/text()')) # categories
+    except IndexError:
+        results[3] = 'none found'    
+    
+    try:
+        results[4] = tree.xpath('//p[@class="address"]/span/text()')[0] # street address
+    except IndexError:
+        results[4] = 'not found'
+    
+    try:
+        results[5] = tree.xpath('//p[@class="address"]/span/text()')[1] # city
+    except IndexError:
+        results[5] = 'not found'
+        
+    try:
+        results[6] = tree.xpath('//p[@class="address"]/span/text()')[3] # zip code
+    except IndexError:
+        results[6] = 'not found'
+    
+    try:
+        results[7] = tree.xpath('//p[@class="address"]/span/text()')[2] # state
+    except IndexError:
+        results[7] = 'not found'
+    
+    try:
+        results[8] = tree.xpath('//a[@class="secondary-btn website-link"]/@href')[0] # website
+    except IndexError:
+        results[8] = 'not found'
+        
+    for i in range(len(results)):
+        results[i] = results[i].replace(',', '')
+    
     return(results)
     
