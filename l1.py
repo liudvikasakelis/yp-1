@@ -3,11 +3,14 @@
 from lxml import html
 import requests
 
-
-def scraper(url):
+def scraper(url):    
     results = [None] * 9
     results[0] = url 
-    page = requests.get(url)
+    try:
+        page = requests.get(url)
+    except requests.exceptions.ConnectionError:
+        return 0
+        
     tree = html.fromstring(page.content)
     
     try:
@@ -54,4 +57,13 @@ def scraper(url):
         results[i] = results[i].replace(',', '')
     
     return(results)
-    
+
+def q_scraper(url):
+    results = []
+    page = requests.get(url)
+    tree = html.fromstring(page.content)
+    for i in tree.xpath('//div[@class="search-results organic"]//a[@class="business-name"]/@href'):
+        if i[0] == '/':
+            results.append(i)
+    return results
+        
