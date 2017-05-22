@@ -1,5 +1,6 @@
 # yp-1
 Quick yellowpages scraper
+
 Made in less than 2 hours, and then abandoned 
 
 ## Test usage 
@@ -13,5 +14,3 @@ test.csv structure:
 
 
 So really just a test for the scraper function. 
-
-## Scraper function usage
