@@ -8,6 +8,7 @@ python3 main.py "https://www.yellowpages.com/search?search_terms=security+system
 ~~~~
 Will output a test.csv file in your directory with entries for each organic search result in the result page.
 test.csv structure: 
+
 'YP page URL | Company name | Phone number | Categories | Street Address | Town/City | Zip | State | Business URL' 
 
 
